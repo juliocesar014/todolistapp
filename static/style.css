@@ -92,11 +92,6 @@ textarea {
   font-weight: 200;
 }
 
-.task a {
-  border: none;
-  text-decoration: none;
-  list-style: none;
-  color: white;
+.task i {
   opacity: 50%;
-  text-align: center;
 }
