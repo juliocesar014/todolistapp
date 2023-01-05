@@ -1,22 +1,33 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
+from bd import collection
+
 app = Flask(__name__)
 
-tasks = ['Teste01','Teste02','Teste03']
-qtd_tasks = len(tasks)
+#tasks = []
 date = datetime.now()
 date_format = date.strftime(("%d %b"))
-print(qtd_tasks)
+
 
 @app.route('/', methods=["GET","POST"])
 def home():
     if request.method == "POST":
         task_content = request.form.get("content")
-        tasks.append((task_content))
-        print(tasks)
+        collection.insert_one({"tasks":task_content})
+        #tasks.append((task_content))
+        #print(tasks)
         
+    tasks_all = [
+        (
+            task["tasks"]
+        )
+        
+        for task in collection.find({})
+    ]
+        
+    qtd_tasks = len(tasks_all)
     
-    return render_template('index.html', tasks=tasks, qtd_tasks=qtd_tasks,date_format=date_format)
+    return render_template('index.html', tasks=tasks_all,date_format=date_format, qtd_tasks=qtd_tasks)
 
 
 @app.route('/delete')   
@@ -26,3 +37,5 @@ def delete_task():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
+    ##qtd task?
