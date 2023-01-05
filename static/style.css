@@ -46,6 +46,8 @@ textarea {
   resize: none;
   margin-top: 15px;
   text-indent: 5px;
+  float: left;
+  margin-right: 10px;
 }
 
 ::placeholder {
