@@ -32,10 +32,12 @@ def home():
 
 @app.route('/delete')   
 def delete_task():
-    return 'Delete'
-
+    collection.find_one_and_delete(({}))
+    return redirect("/")
+    
+    
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
     
-    ##qtd task?
