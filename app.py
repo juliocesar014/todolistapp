@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
 from bd import collection
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
@@ -14,8 +15,6 @@ def home():
     if request.method == "POST":
         task_content = request.form.get("content")
         collection.insert_one({"tasks":task_content})
-        #tasks.append((task_content))
-        #print(tasks)
         
     tasks_all = [
         (
@@ -26,17 +25,14 @@ def home():
     ]
         
     qtd_tasks = len(tasks_all)
-    
     return render_template('index.html', tasks=tasks_all,date_format=date_format, qtd_tasks=qtd_tasks)
 
 
 @app.route('/delete')   
 def delete_task():
-    collection.find_one_and_delete(({}))
-    return redirect("/")
+    collection.find_one_and_delete({})
+    return redirect('/')
     
-    
-    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
